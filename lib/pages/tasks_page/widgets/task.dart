@@ -3,15 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:week2/app_text_styles.dart';
 
+import '../../../database/database.dart';
+
 class Task extends StatelessWidget {
-  final bool isCompleted;
-  final String name;
-  final DateTime dateTime;
+  final Todo todo;
+
+  bool get isCompleted => todo.isCompleted;
+  String get name => todo.taskName;
+  DateTime get dateTime => todo.createTime;
 
   String get parsedDateTime =>
       '${dateTime.day}.${dateTime.month}.${dateTime.year}  ${dateTime.hour}:${dateTime.minute}';
 
-  const Task(this.isCompleted, this.name, this.dateTime, {Key? key})
+  const Task(this.todo, {Key? key})
       : super(key: key);
 
   @override

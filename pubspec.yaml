@@ -78,6 +78,15 @@ flutter:
     - lib/pages/assets/circle.svg
     - lib/pages/assets/circled_i.svg
     - lib/pages/assets/plus.svg
+    - lib/pages/assets/shaft.svg
+    - lib/pages/assets/letterA.svg
+    - lib/pages/assets/letterZ.svg
+    - lib/pages/assets/downTip.svg
+    - lib/pages/assets/line1.svg
+    - lib/pages/assets/line2.svg
+    - lib/pages/assets/line3.svg
+    - lib/pages/assets/smallArrow.svg
+    - lib/pages/assets/backButton.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

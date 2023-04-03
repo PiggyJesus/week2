@@ -9,7 +9,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => TasksPage());
+        return MaterialPageRoute(builder: (_) => TasksPageWrapper());
       case '/information_page':
         return MaterialPageRoute(builder: (_) => InformationPage());
       default:
