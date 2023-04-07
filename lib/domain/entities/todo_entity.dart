@@ -1,4 +1,3 @@
-import 'package:week2/data/drift_database/database.dart';
 
 class TodoEntity {
   late String name;
@@ -12,13 +11,6 @@ class TodoEntity {
     this.isCompleted = false,
     this.id,
   });
-
-  TodoEntity.fromTodo(Todo todo) {
-    name = todo.taskName;
-    finishTime = todo.finishTime;
-    isCompleted = todo.isCompleted;
-    id = todo.id;
-  }
 
   TodoEntity copyWith({
     int? id,

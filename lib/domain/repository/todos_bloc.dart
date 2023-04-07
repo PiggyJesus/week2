@@ -1,11 +1,12 @@
 
 
 import 'package:bloc/bloc.dart';
-import 'package:drift/drift.dart';
 import 'package:week2/domain/entities/todo_entity.dart';
 import 'package:week2/presentation/sort_types.dart';
 
 import 'package:week2/data/drift_database/database.dart';
+
+import '../../data/mapper/mapper.dart';
 
 part 'todos_event.dart';
 
@@ -30,26 +31,22 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
     emit(TodosLoadingState());
 
     completed = (await appDb.getCompleted(true))
-        .map((e) => TodoEntity.fromTodo(e))
+        .map((e) => Mapper.todoToTodoEntity(e))
         .toList();
     notCompleted = (await appDb.getCompleted(false))
-        .map((e) => TodoEntity.fromTodo(e))
+        .map((e) => Mapper.todoToTodoEntity(e))
         .toList();
 
     add(TodosSortEvent());
   }
 
   void _insert(TodosInsertEvent event, Emitter<TodosState> emit) async {
-    await appDb.addTodo(TodosCompanion(
-      taskName: Value(event.todo.name),
-      finishTime: Value(event.todo.finishTime),
-      isCompleted: Value(event.todo.isCompleted),
-    ));
+    await appDb.addTodoFromEntity(event.todo);
     add(TodosGetEvent());
   }
 
   void _update(TodosUpdateEvent event, Emitter<TodosState> emit) {
-    emit(TodosLoadingState());
+    //emit(TodosLoadingState());
 
     appDb.updateCompleted(event.id, event.isCompleted);
 
@@ -97,8 +94,5 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
 
     emit(TodosLoadedState());
   }
-
-
-
 
 }
