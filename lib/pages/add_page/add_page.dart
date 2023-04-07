@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:week2/app_text_styles.dart';
+import 'package:week2/bloc/todo_class.dart';
 import 'package:week2/bloc/todos_bloc.dart';
 import 'package:week2/pages/add_page/widgets/backButton.dart';
 
@@ -15,12 +16,12 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  final _controller = TextEditingController();
+  final _textController = TextEditingController();
   DateTime _dateTime = DateTime.now();
 
   @override
   void dispose() {
-    _controller.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -107,7 +108,7 @@ class _AppPageState extends State<AppPage> {
                         width: 241.w,
                         height: 27.h,
                         child: TextField(
-                          controller: _controller,
+                          controller: _textController,
                           decoration: const InputDecoration(
                             focusColor: AppColors.taskName,
                             //border: InputBorder(borderSide: BorderSide()),
@@ -198,7 +199,14 @@ class _AppPageState extends State<AppPage> {
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
                       ),
-                      onPressed: (){},
+                      onPressed: () {
+                        BlocProvider.of<TodosBloc>(context)
+                            .add(TodosInsertEvent(TodoClass(
+                          name: _textController.value.text,
+                          createTime: _dateTime,
+                        )));
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         'Done',
                         style: AppTextStyles.done,

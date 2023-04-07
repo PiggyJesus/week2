@@ -21,9 +21,20 @@ LazyDatabase _openConnection() {
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
+  Future<List<Todo>> get all => select(todos).get();
+
   Future<List<Todo>> getCompleted(bool isCompleted) {
     return (select(todos)..where((tbl) => tbl.isCompleted.equals(isCompleted)))
         .get();
+  }
+
+  Future<int> addTodo(TodosCompanion entry) {
+    return into(todos).insert(entry);
+  }
+
+  Future<int> updateCompleted(int id, bool isCompleted) {
+    return (update(todos)..where((td) => td.id.equals(id)))
+        .write(TodosCompanion(isCompleted: Value(isCompleted)));
   }
 
   @override

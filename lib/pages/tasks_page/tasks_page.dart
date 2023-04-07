@@ -10,18 +10,6 @@ import 'package:week2/pages/tasks_page/widgets/bottomBarIcon3.dart';
 import 'package:week2/pages/tasks_page/widgets/task.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TasksPageWrapper extends StatelessWidget {
-  const TasksPageWrapper({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => TodosBloc()..add(TodosGetEvent()),
-      child: const TasksPage(),
-    );
-  }
-}
-
 class TasksPage extends StatefulWidget {
   const TasksPage({Key? key}) : super(key: key);
 
@@ -75,14 +63,30 @@ class _TasksPageState extends State<TasksPage> {
           ),
           body: state is TodosLoadedState
               ? Column(
-                  children: [
-                    // Task(
-                    //   todoBloc.completed[0],
-                    // ),
-                    // Task(
-                    //   todoBloc.completed[1],
-                    // ),
-                  ],
+                  children: List.generate(
+                          todoBloc.notCompleted.length,
+                          (index) => Task(
+                                todoBloc.notCompleted[index],
+                                () {
+                                  todoBloc.add(TodosUpdateEvent(
+                                    true,
+                                    todoBloc.notCompleted[index].id!,
+                                  ));
+                                },
+                              )) +
+                      (_completedIsHided
+                          ? []
+                          : List.generate(
+                              todoBloc.completed.length,
+                              (index) => Task(
+                                    todoBloc.completed[index],
+                                    () {
+                                      todoBloc.add(TodosUpdateEvent(
+                                        false,
+                                        todoBloc.completed[index].id!,
+                                      ));
+                                    },
+                                  ))),
                 )
               : const Center(child: CircularProgressIndicator()),
           floatingActionButton: Row(
