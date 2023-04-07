@@ -14,7 +14,7 @@ class Task extends StatelessWidget {
 
   String get name => todo.name;
 
-  DateTime get dateTime => todo.createTime;
+  DateTime get dateTime => todo.finishTime;
 
   String get parsedDateTime =>
       dateTime.day.toString().padLeft(2, '0') +
@@ -33,7 +33,7 @@ class Task extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(width: 13.w),
+        SizedBox(width: 25.w),
         SizedBox(
           width: 20.w,
           height: 20.h,
@@ -59,7 +59,7 @@ class Task extends StatelessWidget {
                 name,
                 style: isCompleted
                     ? AppTextStyles.taskNameCompleted
-                    : AppTextStyles.taskName,
+                    : AppTextStyles.small,
               ),
               SizedBox(height: 13.h),
               Text(

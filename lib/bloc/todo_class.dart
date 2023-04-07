@@ -2,20 +2,20 @@ import 'package:week2/database/database.dart';
 
 class TodoClass {
   late String name;
-  late DateTime createTime;
+  late DateTime finishTime;
   late bool isCompleted;
   int? id;
 
   TodoClass({
     required this.name,
-    required this.createTime,
+    required this.finishTime,
     this.isCompleted = false,
     this.id,
   });
 
   TodoClass.fromTodo(Todo todo) {
     name = todo.taskName;
-    createTime = todo.createTime;
+    finishTime = todo.finishTime;
     isCompleted = todo.isCompleted;
     id = todo.id;
   }
@@ -29,13 +29,13 @@ class TodoClass {
     return TodoClass(
       id: id ?? this.id,
       name: name ?? this.name,
-      createTime: createTime ?? this.createTime,
+      finishTime: createTime ?? this.finishTime,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 
   @override
   String toString() {
-    return '$id: $name $createTime $isCompleted';
+    return '$id: $name $finishTime $isCompleted';
   }
 }

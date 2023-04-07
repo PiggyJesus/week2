@@ -18,7 +18,7 @@ class AppTextStyles {
     color: AppColors.hidingButton,
   );
 
-  static final taskName = TextStyle(
+  static final small = TextStyle(
     fontFamily: 'OpenSans',
     fontSize: 15.sp,
     fontWeight: FontWeight.w600,
@@ -27,7 +27,7 @@ class AppTextStyles {
     height: 4 / 3,
   );
 
-  static final taskNameCompleted = taskName.copyWith(
+  static final taskNameCompleted = small.copyWith(
       decoration: TextDecoration.lineThrough,
     color: AppColors.taskNameCompleted,
   );

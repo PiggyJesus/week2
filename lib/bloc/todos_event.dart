@@ -16,3 +16,9 @@ class TodosUpdateEvent extends TodosEvent {
 
   TodosUpdateEvent(this.isCompleted, this.id);
 }
+
+class TodosSortEvent extends TodosEvent {
+  SortTypes? sortType;
+
+  TodosSortEvent({this.sortType});
+}

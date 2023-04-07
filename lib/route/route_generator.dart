@@ -9,9 +9,9 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => TasksPage());
+        return MaterialPageRoute(builder: (_) => const TasksPage());
       case '/information_page':
-        return MaterialPageRoute(builder: (_) => InformationPage());
+        return MaterialPageRoute(builder: (_) => const InformationPage());
       default:
         return MaterialPageRoute(builder: (_) => const _ErrorPage());
     }

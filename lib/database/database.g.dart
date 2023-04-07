@@ -23,11 +23,11 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   late final GeneratedColumn<String> taskName = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _createTimeMeta =
-      const VerificationMeta('createTime');
+  static const VerificationMeta _finishTimeMeta =
+      const VerificationMeta('finishTime');
   @override
-  late final GeneratedColumn<DateTime> createTime = GeneratedColumn<DateTime>(
-      'create_time', aliasedName, false,
+  late final GeneratedColumn<DateTime> finishTime = GeneratedColumn<DateTime>(
+      'finish_time', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
   static const VerificationMeta _isCompletedMeta =
       const VerificationMeta('isCompleted');
@@ -42,7 +42,7 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
             SqlDialect.postgres: '',
           }));
   @override
-  List<GeneratedColumn> get $columns => [id, taskName, createTime, isCompleted];
+  List<GeneratedColumn> get $columns => [id, taskName, finishTime, isCompleted];
   @override
   String get aliasedName => _alias ?? 'todos';
   @override
@@ -61,13 +61,13 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
     } else if (isInserting) {
       context.missing(_taskNameMeta);
     }
-    if (data.containsKey('create_time')) {
+    if (data.containsKey('finish_time')) {
       context.handle(
-          _createTimeMeta,
-          createTime.isAcceptableOrUnknown(
-              data['create_time']!, _createTimeMeta));
+          _finishTimeMeta,
+          finishTime.isAcceptableOrUnknown(
+              data['finish_time']!, _finishTimeMeta));
     } else if (isInserting) {
-      context.missing(_createTimeMeta);
+      context.missing(_finishTimeMeta);
     }
     if (data.containsKey('is_completed')) {
       context.handle(
@@ -90,8 +90,8 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       taskName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      createTime: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}create_time'])!,
+      finishTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}finish_time'])!,
       isCompleted: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_completed'])!,
     );
@@ -106,19 +106,19 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
 class Todo extends DataClass implements Insertable<Todo> {
   final int id;
   final String taskName;
-  final DateTime createTime;
+  final DateTime finishTime;
   final bool isCompleted;
   const Todo(
       {required this.id,
       required this.taskName,
-      required this.createTime,
+      required this.finishTime,
       required this.isCompleted});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(taskName);
-    map['create_time'] = Variable<DateTime>(createTime);
+    map['finish_time'] = Variable<DateTime>(finishTime);
     map['is_completed'] = Variable<bool>(isCompleted);
     return map;
   }
@@ -127,7 +127,7 @@ class Todo extends DataClass implements Insertable<Todo> {
     return TodosCompanion(
       id: Value(id),
       taskName: Value(taskName),
-      createTime: Value(createTime),
+      finishTime: Value(finishTime),
       isCompleted: Value(isCompleted),
     );
   }
@@ -138,7 +138,7 @@ class Todo extends DataClass implements Insertable<Todo> {
     return Todo(
       id: serializer.fromJson<int>(json['id']),
       taskName: serializer.fromJson<String>(json['taskName']),
-      createTime: serializer.fromJson<DateTime>(json['createTime']),
+      finishTime: serializer.fromJson<DateTime>(json['finishTime']),
       isCompleted: serializer.fromJson<bool>(json['isCompleted']),
     );
   }
@@ -148,7 +148,7 @@ class Todo extends DataClass implements Insertable<Todo> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'taskName': serializer.toJson<String>(taskName),
-      'createTime': serializer.toJson<DateTime>(createTime),
+      'finishTime': serializer.toJson<DateTime>(finishTime),
       'isCompleted': serializer.toJson<bool>(isCompleted),
     };
   }
@@ -156,12 +156,12 @@ class Todo extends DataClass implements Insertable<Todo> {
   Todo copyWith(
           {int? id,
           String? taskName,
-          DateTime? createTime,
+          DateTime? finishTime,
           bool? isCompleted}) =>
       Todo(
         id: id ?? this.id,
         taskName: taskName ?? this.taskName,
-        createTime: createTime ?? this.createTime,
+        finishTime: finishTime ?? this.finishTime,
         isCompleted: isCompleted ?? this.isCompleted,
       );
   @override
@@ -169,53 +169,53 @@ class Todo extends DataClass implements Insertable<Todo> {
     return (StringBuffer('Todo(')
           ..write('id: $id, ')
           ..write('taskName: $taskName, ')
-          ..write('createTime: $createTime, ')
+          ..write('finishTime: $finishTime, ')
           ..write('isCompleted: $isCompleted')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, taskName, createTime, isCompleted);
+  int get hashCode => Object.hash(id, taskName, finishTime, isCompleted);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Todo &&
           other.id == this.id &&
           other.taskName == this.taskName &&
-          other.createTime == this.createTime &&
+          other.finishTime == this.finishTime &&
           other.isCompleted == this.isCompleted);
 }
 
 class TodosCompanion extends UpdateCompanion<Todo> {
   final Value<int> id;
   final Value<String> taskName;
-  final Value<DateTime> createTime;
+  final Value<DateTime> finishTime;
   final Value<bool> isCompleted;
   const TodosCompanion({
     this.id = const Value.absent(),
     this.taskName = const Value.absent(),
-    this.createTime = const Value.absent(),
+    this.finishTime = const Value.absent(),
     this.isCompleted = const Value.absent(),
   });
   TodosCompanion.insert({
     this.id = const Value.absent(),
     required String taskName,
-    required DateTime createTime,
+    required DateTime finishTime,
     required bool isCompleted,
   })  : taskName = Value(taskName),
-        createTime = Value(createTime),
+        finishTime = Value(finishTime),
         isCompleted = Value(isCompleted);
   static Insertable<Todo> custom({
     Expression<int>? id,
     Expression<String>? taskName,
-    Expression<DateTime>? createTime,
+    Expression<DateTime>? finishTime,
     Expression<bool>? isCompleted,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (taskName != null) 'name': taskName,
-      if (createTime != null) 'create_time': createTime,
+      if (finishTime != null) 'finish_time': finishTime,
       if (isCompleted != null) 'is_completed': isCompleted,
     });
   }
@@ -223,12 +223,12 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   TodosCompanion copyWith(
       {Value<int>? id,
       Value<String>? taskName,
-      Value<DateTime>? createTime,
+      Value<DateTime>? finishTime,
       Value<bool>? isCompleted}) {
     return TodosCompanion(
       id: id ?? this.id,
       taskName: taskName ?? this.taskName,
-      createTime: createTime ?? this.createTime,
+      finishTime: finishTime ?? this.finishTime,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -242,8 +242,8 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     if (taskName.present) {
       map['name'] = Variable<String>(taskName.value);
     }
-    if (createTime.present) {
-      map['create_time'] = Variable<DateTime>(createTime.value);
+    if (finishTime.present) {
+      map['finish_time'] = Variable<DateTime>(finishTime.value);
     }
     if (isCompleted.present) {
       map['is_completed'] = Variable<bool>(isCompleted.value);
@@ -256,7 +256,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     return (StringBuffer('TodosCompanion(')
           ..write('id: $id, ')
           ..write('taskName: $taskName, ')
-          ..write('createTime: $createTime, ')
+          ..write('finishTime: $finishTime, ')
           ..write('isCompleted: $isCompleted')
           ..write(')'))
         .toString();

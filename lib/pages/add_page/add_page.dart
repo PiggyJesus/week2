@@ -8,16 +8,18 @@ import 'package:week2/pages/add_page/widgets/backButton.dart';
 
 import '../../app_colors.dart';
 
-class AppPage extends StatefulWidget {
-  const AppPage({Key? key}) : super(key: key);
+class AddPage extends StatefulWidget {
+  const AddPage({Key? key}) : super(key: key);
 
   @override
-  State<AppPage> createState() => _AppPageState();
+  State<AddPage> createState() => _AddPageState();
 }
 
-class _AppPageState extends State<AppPage> {
+class _AddPageState extends State<AddPage> {
   final _textController = TextEditingController();
   DateTime _dateTime = DateTime.now();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -63,161 +65,176 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     //var bl = BlocProvider.of<TodosBloc>(context);
-    return Container(
+    return SizedBox(
       height: 752.h,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 45.h,
-            child: Stack(
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyBackButton(),
-                ),
-                Center(
-                  child: Text(
-                    'Task',
-                    style: AppTextStyles.appBarTitle,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 45.h,
+              child: Stack(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: MyBackButton(),
                   ),
-                )
-              ],
+                  Center(
+                    child: Text(
+                      'Task',
+                      style: AppTextStyles.appBarTitle,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          Divider(height: 1.h),
-          Padding(
-            padding: EdgeInsets.only(left: 29.w, top: 35.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Add a task',
-                  style: AppTextStyles.title,
-                ),
-                SizedBox(height: 20.h),
-                SizedBox(
-                  height: 64.h,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Name',
-                        style: AppTextStyles.addCategory,
-                      ),
-                      SizedBox(width: 11.w),
-                      SizedBox(
-                        width: 241.w,
-                        height: 27.h,
-                        child: TextField(
-                          controller: _textController,
-                          decoration: const InputDecoration(
-                            focusColor: AppColors.taskName,
-                            //border: InputBorder(borderSide: BorderSide()),
-                            hintText: 'Input Name',
-                          ),
-                          style: AppTextStyles.taskName,
-                        ),
-                      ),
-                    ],
+            Divider(height: 1.h),
+            Padding(
+              padding: EdgeInsets.only(left: 29.w, top: 35.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Add a task',
+                    style: AppTextStyles.title,
                   ),
-                ),
-                SizedBox(
-                  height: 64.h,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Time',
-                        style: AppTextStyles.addCategory,
-                      ),
-                      SizedBox(width: 17.w),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(6.r),
-                        child: Container(
-                          width: 86.w,
-                          height: 36.h,
-                          //color: AppColors.dateTimePickers,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: AppColors.dateTimePickers,
-                              padding: EdgeInsets.zero,
+                  SizedBox(height: 20.h),
+                  SizedBox(
+                    height: 64.h,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Name',
+                          style: AppTextStyles.addCategory,
+                        ),
+                        SizedBox(width: 11.w),
+                        SizedBox(
+                          width: 241.w,
+                          //height: 27.h,
+                          child: TextFormField(
+                            controller: _textController,
+                            decoration: InputDecoration(
+                              focusColor: AppColors.taskName,
+                              //border: InputBorder(borderSide: BorderSide()),
+                              hintText: 'Input Name',
+                              hintStyle: AppTextStyles.small.copyWith(
+                                  color: AppColors.taskName.withOpacity(0.7)),
+                              contentPadding: EdgeInsets.only(left: 10.w),
+
                             ),
-                            onPressed: _selectTime,
-                            child: Text(
-                              _dateTime.hour.toString().padLeft(2, '0') +
-                                  ':' +
-                                  _dateTime.minute.toString().padLeft(2, '0'),
-                              style: AppTextStyles.dateTimePicker,
-                            ),
+                            style: AppTextStyles.small,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 64.h,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Date',
-                        style: AppTextStyles.addCategory,
-                      ),
-                      SizedBox(width: 22.w),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(6.r),
-                        child: Container(
-                          width: 163.w,
-                          height: 36.h,
-                          //color: AppColors.dateTimePickers,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: AppColors.dateTimePickers,
-                              padding: EdgeInsets.zero,
-                            ),
-                            onPressed: _selectDate,
-                            child: Text(
-                              _dateTime.day.toString().padLeft(2, '0') +
-                                  '.' +
-                                  _dateTime.month.toString().padLeft(2, '0') +
-                                  '.' +
-                                  _dateTime.year.toString().padLeft(4, '0'),
-                              style: AppTextStyles.dateTimePicker,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 33.h),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(11.58.r),
-                  child: Container(
-                    color: AppColors.doneButton,
-                    width: 316.w,
-                    height: 46.h,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                      ),
-                      onPressed: () {
-                        BlocProvider.of<TodosBloc>(context)
-                            .add(TodosInsertEvent(TodoClass(
-                          name: _textController.value.text,
-                          createTime: _dateTime,
-                        )));
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Done',
-                        style: AppTextStyles.done,
-                      ),
+                      ],
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 64.h,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Time',
+                          style: AppTextStyles.addCategory,
+                        ),
+                        SizedBox(width: 17.w),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6.r),
+                          child: Container(
+                            width: 86.w,
+                            height: 36.h,
+                            //color: AppColors.dateTimePickers,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: AppColors.dateTimePickers,
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: _selectTime,
+                              child: Text(
+                                _dateTime.hour.toString().padLeft(2, '0') +
+                                    ':' +
+                                    _dateTime.minute.toString().padLeft(2, '0'),
+                                style: AppTextStyles.dateTimePicker,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 64.h,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Date',
+                          style: AppTextStyles.addCategory,
+                        ),
+                        SizedBox(width: 22.w),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6.r),
+                          child: Container(
+                            width: 163.w,
+                            height: 36.h,
+                            //color: AppColors.dateTimePickers,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: AppColors.dateTimePickers,
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: _selectDate,
+                              child: Text(
+                                _dateTime.day.toString().padLeft(2, '0') +
+                                    '.' +
+                                    _dateTime.month.toString().padLeft(2, '0') +
+                                    '.' +
+                                    _dateTime.year.toString().padLeft(4, '0'),
+                                style: AppTextStyles.dateTimePicker,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 33.h),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(11.58.r),
+                    child: Container(
+                      color: AppColors.doneButton,
+                      width: 316.w,
+                      height: 46.h,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<TodosBloc>(context)
+                                .add(TodosInsertEvent(TodoClass(
+                              name: _textController.value.text,
+                              finishTime: _dateTime,
+                            )));
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Text(
+                          'Done',
+                          style: AppTextStyles.done,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
