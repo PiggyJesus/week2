@@ -72,22 +72,22 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/pages/assets/empty_check.svg
-    - lib/pages/assets/ok.svg
-    - lib/pages/assets/full_check.svg
-    - lib/pages/assets/circle.svg
-    - lib/pages/assets/circled_i.svg
-    - lib/pages/assets/plus.svg
-    - lib/pages/assets/shaft.svg
-    - lib/pages/assets/letterA.svg
-    - lib/pages/assets/letterZ.svg
-    - lib/pages/assets/downTip.svg
-    - lib/pages/assets/line1.svg
-    - lib/pages/assets/line2.svg
-    - lib/pages/assets/line3.svg
-    - lib/pages/assets/smallArrow.svg
-    - lib/pages/assets/backButton.svg
-    - lib/pages/assets/twoDaysArrow.svg
+    - lib/presentation/assets/empty_check.svg
+    - lib/presentation/assets/ok.svg
+    - lib/presentation/assets/full_check.svg
+    - lib/presentation/assets/circle.svg
+    - lib/presentation/assets/circled_i.svg
+    - lib/presentation/assets/plus.svg
+    - lib/presentation/assets/shaft.svg
+    - lib/presentation/assets/letterA.svg
+    - lib/presentation/assets/letterZ.svg
+    - lib/presentation/assets/downTip.svg
+    - lib/presentation/assets/line1.svg
+    - lib/presentation/assets/line2.svg
+    - lib/presentation/assets/line3.svg
+    - lib/presentation/assets/smallArrow.svg
+    - lib/presentation/assets/backButton.svg
+    - lib/presentation/assets/twoDaysArrow.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
