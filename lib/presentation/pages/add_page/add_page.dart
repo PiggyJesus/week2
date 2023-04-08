@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:week2/presentation/app_text_styles.dart';
 import 'package:week2/domain/entities/todo_entity.dart';
-import 'package:week2/domain/repository/todos_bloc.dart';
+import 'package:week2/domain/bloc/todos_bloc.dart';
 import '../add_page/widgets/backButton.dart';
 
 import '../../app_colors.dart';

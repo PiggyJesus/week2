@@ -4,22 +4,20 @@ import 'package:bloc/bloc.dart';
 import 'package:week2/domain/entities/todo_entity.dart';
 import 'package:week2/presentation/sort_types.dart';
 
-import 'package:week2/data/drift_database/database.dart';
 
-import '../../data/mapper/mapper.dart';
+import '../../data/repository/todos_data_repository.dart';
 
 part 'todos_event.dart';
-
 part 'todos_state.dart';
 
 class TodosBloc extends Bloc<TodosEvent, TodosState> {
-  late AppDb appDb;
+  late TodosDataRepository todosDataRepository;
   List<TodoEntity> completed = [];
   List<TodoEntity> notCompleted = [];
   SortTypes sortType = SortTypes.AtoZ;
 
   TodosBloc() : super(TodosInitState()) {
-    appDb = AppDb();
+    todosDataRepository = TodosDataRepository();
 
     on<TodosGetEvent>(_get);
     on<TodosInsertEvent>(_insert);
@@ -30,25 +28,21 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
   void _get(TodosGetEvent event, Emitter<TodosState> emit) async {
     emit(TodosLoadingState());
 
-    completed = (await appDb.getCompleted(true))
-        .map((e) => Mapper.todoToTodoEntity(e))
-        .toList();
-    notCompleted = (await appDb.getCompleted(false))
-        .map((e) => Mapper.todoToTodoEntity(e))
-        .toList();
+    completed = await todosDataRepository.getCompleted(true);
+    notCompleted = await todosDataRepository.getCompleted(false);
 
     add(TodosSortEvent());
   }
 
   void _insert(TodosInsertEvent event, Emitter<TodosState> emit) async {
-    await appDb.addTodoFromEntity(event.todo);
+    await todosDataRepository.addTodo(event.todo);
     add(TodosGetEvent());
   }
 
   void _update(TodosUpdateEvent event, Emitter<TodosState> emit) {
     //emit(TodosLoadingState());
 
-    appDb.updateCompleted(event.id, event.isCompleted);
+    todosDataRepository.updateCompleted(event.id, event.isCompleted);
 
     if (event.isCompleted) {
       final removed = notCompleted

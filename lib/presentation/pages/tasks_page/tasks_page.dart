@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:week2/presentation/app_text_styles.dart';
-import 'package:week2/domain/repository/todos_bloc.dart';
+import 'package:week2/domain/bloc/todos_bloc.dart';
 import '../add_page/add_page.dart';
 import '../tasks_page/widgets/bottomBarIcon1.dart';
 import '../tasks_page/widgets/bottomBarIcon2.dart';
