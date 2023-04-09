@@ -71,7 +71,8 @@ class Task extends StatelessWidget {
               SizedBox(height: 10.5.h),
             ],
           ),
-        )
+        ),
+        SizedBox(width: 25.w),
       ],
     );
   }

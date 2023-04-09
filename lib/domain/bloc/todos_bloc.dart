@@ -42,21 +42,24 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
   void _update(TodosUpdateEvent event, Emitter<TodosState> emit) {
     //emit(TodosLoadingState());
 
-    todosDataRepository.updateCompleted(event.id, event.isCompleted);
+    todosDataRepository.updateCompleted(event.todo);
 
-    if (event.isCompleted) {
+    final id = event.todo.id;
+    final isCompleted = !event.todo.isCompleted;
+
+    if (isCompleted) {
       final removed = notCompleted
-          .where((e) => (e.id == event.id))
+          .where((e) => (e.id == id))
           .map((e) => e.copyWith(isCompleted: true))
           .toList();
-      notCompleted.removeWhere((e) => (e.id == event.id));
+      notCompleted.removeWhere((e) => (e.id == id));
       completed.addAll(removed);
     } else {
       final removed = completed
-          .where((e) => (e.id == event.id))
+          .where((e) => (e.id == id))
           .map((e) => e.copyWith(isCompleted: false))
           .toList();
-      completed.removeWhere((e) => (e.id == event.id));
+      completed.removeWhere((e) => (e.id == id));
       notCompleted.addAll(removed);
     }
 

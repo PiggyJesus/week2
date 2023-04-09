@@ -11,10 +11,9 @@ class TodosInsertEvent extends TodosEvent {
 }
 
 class TodosUpdateEvent extends TodosEvent {
-  int id;
-  bool isCompleted;
+  TodoEntity todo;
 
-  TodosUpdateEvent(this.isCompleted, this.id);
+  TodosUpdateEvent(this.todo);
 }
 
 class TodosSortEvent extends TodosEvent {

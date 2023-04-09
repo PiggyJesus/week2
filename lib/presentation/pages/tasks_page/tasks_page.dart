@@ -99,9 +99,7 @@ class _TasksPageState extends State<TasksPage> {
                               todoBloc.notCompleted[index],
                               () {
                                 todoBloc.add(TodosUpdateEvent(
-                                  true,
-                                  todoBloc.notCompleted[index].id!,
-                                ));
+                                    todoBloc.notCompleted[index]));
                               },
                             ),
                           ) +
@@ -113,9 +111,7 @@ class _TasksPageState extends State<TasksPage> {
                                     todoBloc.completed[index],
                                     () {
                                       todoBloc.add(TodosUpdateEvent(
-                                        false,
-                                        todoBloc.completed[index].id!,
-                                      ));
+                                          todoBloc.completed[index]));
                                     },
                                   ),
                                 )),

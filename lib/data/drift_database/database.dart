@@ -43,9 +43,9 @@ class AppDb extends _$AppDb {
     return into(todos).insert(entry);
   }
 
-  Future<int> updateCompleted(int id, bool isCompleted) {
-    return (update(todos)..where((td) => td.id.equals(id)))
-        .write(TodosCompanion(isCompleted: Value(isCompleted)));
+  Future<int> updateCompleted(TodoEntity todo) {
+    return (update(todos)..where((td) => td.id.equals(todo.id!)))
+        .write(TodosCompanion(isCompleted: Value(todo.isCompleted)));
   }
 
   @override

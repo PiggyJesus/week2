@@ -8,7 +8,7 @@ class TodosDataRepository extends TodosRepository {
 
 
   @override
-  Future<int> addTodo(TodoEntity todo) {
+  Future<void> addTodo(TodoEntity todo) {
     return appDb.addTodoFromEntity(todo);
   }
 
@@ -20,8 +20,8 @@ class TodosDataRepository extends TodosRepository {
   }
 
   @override
-  Future<int> updateCompleted(int id, bool isCompleted) {
-    return appDb.updateCompleted(id, isCompleted);
+  Future<void> updateCompleted(TodoEntity todo) {
+    return appDb.updateCompleted(todo.copyWith(isCompleted: !todo.isCompleted));
 
   }
 
